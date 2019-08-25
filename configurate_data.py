@@ -10,10 +10,24 @@ TRAIN_DATA_SIZE = 120
 TEST_DATA_SIZE = 30
 IMG_SIZE = 256
 OUTPUT_SIZE = 256*256
-CATEGORY = 2
+CATEGORY = 6
 
 FILENAMES = ['../DAGM/Class1_def/',
-            '../DAGM/Class2_def/']
+            '../DAGM/Class2_def/',
+            '../DAGM/Class3_def/',
+            '../DAGM/Class4_def/',
+            '../DAGM/Class5_def/',
+            '../DAGM/Class6_def/']
+
+def savetxt(filename, data):
+    for i in range(data.shape[0]):
+        print(filename + ', line ' + str(i))
+        file = open(filename, 'a')     
+        file.write('{:.9f}'.format(data[i, 0]))
+        for j in range(1, data.shape[1]):
+            file.write(',' + '{:.9f}'.format(data[i, j]))
+        file.write('\n')
+        file.close()
 
 if __name__ == "__main__":
 
@@ -125,7 +139,9 @@ if __name__ == "__main__":
             w_tst_array[k, 1:OUTPUT_SIZE*CATEGORY + 1] = w_tst_array[k, 1:OUTPUT_SIZE*CATEGORY + 1]/s
         tstLABEL = w_tst_array.tolist()
         
-        np.savetxt('./data/trainLABEL' + str(IMG_SIZE) + '.txt', trnLABEL, fmt='%.10f', delimiter=',')
-        np.savetxt('./data/testLABEL' + str(IMG_SIZE) + '.txt', tstLABEL, fmt='%.10f', delimiter=',')
+        #np.savetxt('./data/trainLABEL' + str(IMG_SIZE) + '.txt', trnLABEL, fmt='%.10f', delimiter=',')
+        #np.savetxt('./data/testLABEL' + str(IMG_SIZE) + '.txt', tstLABEL, fmt='%.10f', delimiter=',')
+        savetxt('./data/trainLABEL' + str(IMG_SIZE) + '.txt', w_array)
+        savetxt('./data/testLABEL' + str(IMG_SIZE) + '.txt', w_tst_array)
 
         sess.close()
